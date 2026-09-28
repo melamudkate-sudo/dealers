@@ -347,12 +347,13 @@
 .catalog-track { margin-right:0; }
 }
 
-/* 11 — Every desktop row reserves its description line. */
+/* 13 — Every desktop row reserves its description line. */
 .terms-accordion { align-self:center; min-width:0; height:566px; overflow-y:auto; overscroll-behavior:contain; padding:10px 26px; border:1px solid var(--line); border-radius:var(--radius-card); background:#ffffffa6; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:inset 0 1px 0 white,var(--surface-shadow); }
-.terms-accordion details { height:68px; }
+.terms-accordion details { height:68px; overflow-anchor:none; }
 .terms-accordion details+details { border-top:1px solid var(--line); }
 .terms-accordion summary { display:flex; align-items:center; justify-content:space-between; gap:24px; list-style:none; padding:10px 0 6px; font-size:19px; font-weight:600; line-height:1.3; cursor:pointer; }
 .terms-accordion summary::-webkit-details-marker { display:none; }
+.terms-accordion { overflow-anchor:none; scroll-behavior:auto; }
 .terms-accordion summary span { font:400 28px/1 var(--display); color:#848995; transition:transform var(--motion-micro) var(--ease),color var(--motion-micro); }
 .terms-accordion details[open] summary { color:var(--red); }
 .terms-accordion details[open] summary span { transform:rotate(45deg); color:var(--red); }
@@ -531,4 +532,85 @@
  .validation-pipeline li { padding-left:62px; }
  .cooking-proof { gap:18px; }
  .cooking-proof>span { font-size:11px; }
+}
+
+/* Phone catalog and commercial chapters: one focused card at a time. */
+@media(max-width:600px) {
+ .portfolio-head { height:auto; min-height:0; margin:18px 0 20px; }
+ .portfolio-stage { height:auto; min-height:0; }
+ .products { display:flex; height:350px; gap:16px; padding:0; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+ .products::-webkit-scrollbar { display:none; }
+ .product-card { flex:0 0 100%; width:100%; padding:18px 22px; scroll-snap-align:center; text-align:center; }
+ .product-image { margin:10px 0; }
+ .card-content>strong { justify-content:center; gap:18px; font-size:26px; }
+ .card-content>span { min-height:0; font-size:13px; }
+ .card-meta { font-size:10px; }
+ .mobile-category-nav { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:14px; }
+ .mobile-category-nav button { background:none; border:0; border-bottom:2px solid #d0d5df; padding:12px 3px; font-size:11px; color:var(--copy); min-height:44px; }
+ .mobile-category-nav button[aria-current=true] { color:var(--red); border-color:var(--red); font-weight:600; }
+ .mobile-category-nav button::before { content:''; display:block; width:5px; height:5px; margin:0 auto 7px; border-radius:50%; background:currentColor; opacity:.35; }
+ .mobile-category-nav button[aria-current=true]::before { width:16px; border-radius:6px; opacity:1; }
+ .catalog-open .mobile-category-nav { display:none; }
+ .catalog-heading { display:grid; grid-template-columns:1fr auto; gap:12px; }
+ .catalog-anchor { display:none; }
+ .catalog-heading h2 { font-size:30px; }
+ .catalog-heading p { font-size:11px; margin-top:8px; }
+ .catalog-back { padding:10px 12px; font-size:11px; gap:8px; margin:0; }
+ .catalog-view { height:auto; }
+ .catalog-rail { flex:none; height:380px; gap:16px; padding:0; }
+ .catalog-card { flex:0 0 100%; }
+ .catalog-image { max-height:none; }
+ .catalog-card h3 { min-height:0; font-size:17px; margin:14px 0 8px; }
+ .catalog-swatches { justify-content:center; }
+ .catalog-card h3 { text-align:center; }
+ .catalog-controls { padding-top:18px; }
+ .numbers-heading { margin:18px 0; }
+ .numbers-heading>p { display:none; }
+ .demand-stage { grid-template-columns:1fr 1fr; gap:16px; }
+ .demand-stage article { padding:12px 0 0; }
+ .demand-stage small { font-size:10px; line-height:1.4; letter-spacing:.02em; margin-bottom:10px; }
+ .demand-stage strong { font-size:clamp(34px,10vw,44px); }
+ .demand-stage article>span { font-size:12px; margin-top:8px; }
+ .share-proof { margin-top:18px; padding-top:14px; gap:10px; }
+ .share-row { gap:5px; }
+ .share-row span { padding:9px 6px; }
+ .share-row b { font-size:9px; }
+ .share-row strong { font-size:19px; }
+ .share-lead { padding:10px 12px; align-items:center; }
+ .share-lead>b { font-size:28px; }
+ .share-lead>span { font-size:11px; margin:0; }
+ .share-secondary { flex-wrap:wrap; font-size:10px; gap:5px; }
+ .share-secondary b { font-size:11px; }
+ .marketing-layout { gap:24px; }
+ .marketing-layout>.marketing-pack { margin-top:0; }
+ .marketing-layout>.marketing-note { margin-top:-8px; }
+ .marketing-copy .marketing-lead { font-size:15px; }
+ .distributor-terms { display:flex; flex-direction:column; gap:22px; }
+ .terms-introduction { order:1; }
+ .distributor-terms>.section-label { order:0; }
+ .terms-assurance { margin-top:20px; padding-left:14px; }
+ .terms-assurance>strong { font-size:14px; color:var(--copy); font-weight:500; }
+ .terms-anchors { gap:20px; margin:18px 0; }
+ .terms-anchors small { font-size:10px; margin-bottom:8px; }
+ .terms-anchors strong { font-size:38px; }
+ .terms-anchors strong span,.terms-anchors>div>span { font-size:11px; }
+ .terms-assurance ul { display:flex; flex-wrap:wrap; gap:6px; font-size:11px; margin-top:12px; }
+ .terms-assurance li { padding:6px 8px; background:#e7ebf1; border-radius:6px; }
+ .terms-scaling { order:2; }
+ .terms-scaling ol { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:0 0 12px; }
+ .terms-scaling ol::before { display:none; }
+ .terms-scaling li { flex:0 0 100%; scroll-snap-align:center; padding:14px; border:1px solid #ccd3df; border-radius:12px; background:#ffffff90; }
+ .terms-scaling li::before { display:none; }
+ .terms-scaling strong { font-size:15px; margin-top:8px; }
+ .terms-scaling span { font-size:13px; }
+ .terms-scaling>p { font-size:10px; margin:0; }
+ .terms-accordion { order:3; width:100%; height:auto; max-height:none; overflow:visible; margin:0; padding:0 16px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+ .terms-accordion details,.terms-accordion details[open] { height:auto; min-height:0; }
+ .terms-accordion summary { min-height:54px; padding:16px 0; font-size:16px; }
+ .terms-accordion details p { font-size:14px; line-height:1.5; padding-bottom:16px; }
+ .partnership-grid { grid-template-columns:1fr; gap:16px; }
+ .partnership-grid b { font-size:12px; }
+ .partnership-grid p { font-size:13px!important; line-height:1.6!important; }
+ .demand-generation-grid { grid-template-columns:1fr 1fr; gap:8px; }
+ .demand-generation-grid>span { font-size:12px; line-height:1.4; }
 }

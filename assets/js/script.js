@@ -12,6 +12,7 @@ const demiandMotion = (() => {
   const moreToggle = header.querySelector('.nav-sections');
   const moreMenu = document.querySelector('.section-menu');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const phoneViewport = matchMedia('(max-width:600px)');
   const finePointer = matchMedia('(pointer: fine)');
 
   moreMenu.inert = true;
@@ -122,7 +123,7 @@ const demiandMotion = (() => {
     let storyDragging = false;
 
     function storyCanAutoplay() {
-      return storyInView && document.visibilityState === 'visible' && !reducedMotion.matches &&
+      return !phoneViewport.matches && storyInView && document.visibilityState === 'visible' && !reducedMotion.matches &&
         !storyFocusInside && !storyDragging;
     }
 
@@ -217,8 +218,9 @@ const demiandMotion = (() => {
       appStory.querySelector('.app-story-frame').dataset.direction = direction;
       resetStoryAutoplay();
 
-      if (reducedMotion.matches) {
+      if (reducedMotion.matches || phoneViewport.matches) {
         settleStory();
+        if (phoneViewport.matches && !reducedMotion.matches) incoming.animate([{opacity:0},{opacity:1}],{duration:180,easing:demiandMotion.ease});
         return;
       }
 
@@ -338,26 +340,16 @@ const demiandMotion = (() => {
 
   const partnerTerms = [...document.querySelectorAll('.terms-accordion details')];
   let selectedTerm = partnerTerms.find(detail => detail.open);
-  const closingTerms = new Map();
   partnerTerms.forEach(detail => detail.querySelector('summary').addEventListener('click', event => {
     event.preventDefault();
+    const summary = detail.querySelector('summary');
+    const top = summary.getBoundingClientRect().top;
+    const container = detail.parentElement;
     selectedTerm = selectedTerm === detail ? null : detail;
-    partnerTerms.forEach(item => {
-      closingTerms.get(item)?.cancel();
-      closingTerms.delete(item);
-      if (item === selectedTerm) { item.open = true; return; }
-      if (!item.open) return;
-      if (reducedMotion.matches) { item.open = false; return; }
-      const animation = item.querySelector('p').animate([
-        { opacity:1, transform:'none', clipPath:'inset(0)' },
-        { opacity:0, transform:'translateY(-5px)', clipPath:'inset(0 0 100%)' }
-      ], { duration:demiandMotion.state, easing:demiandMotion.ease });
-      closingTerms.set(item, animation);
-      animation.finished.then(() => {
-        if (closingTerms.get(item) !== animation) return;
-        item.open = false; closingTerms.delete(item);
-      }).catch(() => {});
-    });
+    partnerTerms.forEach(item => { item.open = item === selectedTerm; });
+    const delta = summary.getBoundingClientRect().top - top;
+    if (getComputedStyle(container).overflowY === 'auto') container.scrollTop += delta;
+    else if (Math.abs(delta) > 1) window.scrollBy({top:delta,behavior:'instant'});
   }));
 
   // Ordered story reveals, independent of native document scrolling.
@@ -651,6 +643,75 @@ const demiandMotion = (() => {
   const endDrag = () => { if (!drag) return; if (rail.hasPointerCapture(drag.id)) rail.releasePointerCapture(drag.id); drag = null; rail.classList.remove('dragging'); };
   window.addEventListener('pointerup', endDrag); rail.addEventListener('pointercancel', endDrag);
   rail.addEventListener('click', event => { if (suppressClick) { event.preventDefault(); event.stopPropagation(); suppressClick = false; } }, true);
+})();
+
+// Phone-only controls reuse the original content; no duplicated desktop/mobile sections.
+(() => {
+  const phone = matchMedia('(max-width:600px)');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  function pager(rail, label, categories = false) {
+    const items = [...rail.children];
+    const controls = document.createElement('div');
+    controls.className = categories ? 'mobile-category-nav' : 'mobile-pager';
+    controls.setAttribute('role','group'); controls.setAttribute('aria-label',label);
+    let active = 0;
+    const move = index => {
+      const target = Math.max(0,Math.min(items.length-1,index));
+      rail.scrollTo({left:items[target].offsetLeft-items[0].offsetLeft,behavior:reduced.matches?'instant':'smooth'});
+    };
+    let previous,next,count,dots;
+    if (categories) {
+      ['Air Fryers','Coffee Makers','Blenders'].forEach((text,index) => {
+        const button = document.createElement('button'); button.type='button'; button.textContent=text;
+        button.addEventListener('click',()=>move(index)); controls.append(button);
+      });
+    } else {
+      previous=document.createElement('button'); next=document.createElement('button'); count=document.createElement('span');
+      previous.type=next.type='button'; previous.textContent='←'; next.textContent='→';
+      previous.setAttribute('aria-label','Previous '+label); next.setAttribute('aria-label','Next '+label);
+      count.setAttribute('aria-live','polite');count.className='sr-only';
+      dots=document.createElement('div');dots.className='mobile-dots';
+      items.forEach((_,index)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label','Show '+label+' '+(index+1));dot.addEventListener('click',()=>move(index));dots.append(dot);});
+      previous.addEventListener('click',()=>move(active-1)); next.addEventListener('click',()=>move(active+1));
+      controls.append(previous,dots,count,next);
+    }
+    rail.after(controls);
+    const update = () => {
+      if (!phone.matches) return;
+      const start=rail.getBoundingClientRect().left;
+      active=items.reduce((best,item,i)=>Math.abs(item.getBoundingClientRect().left-start)<Math.abs(items[best].getBoundingClientRect().left-start)?i:best,0);
+      if (categories) [...controls.children].forEach((button,i)=>button.setAttribute('aria-current',String(i===active)));
+      else { count.textContent=String(active+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0');previous.disabled=active===0;next.disabled=active===items.length-1;[...dots.children].forEach((dot,i)=>dot.setAttribute('aria-current',String(i===active))); }
+    };
+    rail.addEventListener('scroll',update,{passive:true}); new ResizeObserver(update).observe(rail);
+    rail.addEventListener('keydown',event=>{if(!phone.matches||!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();move(active+(event.key==='ArrowRight'?1:-1));});
+    const configure=()=>{if(phone.matches)rail.setAttribute('tabindex','0');else {rail.removeAttribute('tabindex');rail.scrollLeft=0;}update();};
+    phone.addEventListener('change',configure);configure();
+  }
+  pager(document.querySelector('.products'),'product categories',true);
+  pager(document.querySelector('.benefit-grid'),'advantage');
+  pager(document.querySelector('.terms-scaling ol'),'launch stage');
+  const layout=document.querySelector('.marketing-layout');
+  const moved=[...document.querySelectorAll('.marketing-copy .marketing-pack,.marketing-copy .marketing-note')].map(node=>{
+    const marker=document.createComment('Original desktop position');node.before(marker);return {node,marker};
+  });
+  const disclosures=[];
+  function disclosure(nodes,label) {
+    const detail=document.createElement('details');detail.className='mobile-disclosure';
+    const summary=document.createElement('summary');summary.textContent=label;detail.append(summary);
+    const positions=nodes.map(node=>{const marker=document.createComment('Desktop content position');node.before(marker);return {node,marker};});
+    disclosures.push({detail,positions});
+  }
+  disclosure([document.querySelector('.warranty-copy')],'Warranty & service details');
+  disclosure([...document.querySelectorAll('.app-slide[data-app-slide="0"] .app-capability-grid,.app-slide[data-app-slide="0"] .app-proof-line')],'Programs, recipes & localization');
+  function arrange() {
+    moved.forEach(({node,marker})=>phone.matches?layout.append(node):marker.after(node));
+    disclosures.forEach(({detail,positions})=>{
+      if(phone.matches){positions[0].marker.after(detail);positions.forEach(({node})=>detail.append(node));}
+      else {positions.forEach(({node,marker})=>marker.after(node));detail.remove();}
+    });
+  }
+  phone.addEventListener('change',arrange);arrange();
 })();
 
 // Four marketing previews. Add a repository-relative data-video-src to each
