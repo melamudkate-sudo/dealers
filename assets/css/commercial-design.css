@@ -403,14 +403,6 @@
 .terms-accordion details p { white-space:normal; padding-bottom:20px; }
 .partnership-grid { grid-template-columns:1fr; }
 .demand-generation-grid { grid-template-columns:1fr 1fr; }
-<<<<<<< HEAD
-=======
-}
-
-@media(max-width:600px) {
- .catalog-heading .catalog-ladder { flex-basis:100%; white-space:nowrap; overflow-x:auto; }
- .catalog-ladder span { display:none; }
->>>>>>> f29e278ea57365d2dab5d470abd3c8bc8d7bf9c0
 }
 
 @media(min-width:1001px) {
@@ -425,7 +417,6 @@
  .terms-accordion details[open] { min-height:44px; }
  .terms-accordion summary { padding:4px 0 3px; font-size:14px; }
  .terms-accordion details p { font-size:12px; }
-<<<<<<< HEAD
 }
 
 /* Marketing: editorial proof + a fixed-size, four-film showcase. */
@@ -509,9 +500,6 @@
  .marketing-video-metrics>span { grid-template-columns:1fr; }
 }
 @media(prefers-reduced-motion:reduce) { .marketing-controls button { transition:none; } }
-=======
-}
->>>>>>> f29e278ea57365d2dab5d470abd3c8bc8d7bf9c0
 
 /* Cooking validation: one connected sequence, with native vertical flow on small screens. */
 .cooking-performance.viewport-section { display:grid; gap:clamp(24px,4dvh,42px); padding:32px var(--x); background:var(--paper); }
