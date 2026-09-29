@@ -343,11 +343,11 @@ const demiandMotion = (() => {
   partnerTerms.forEach(detail => detail.querySelector('summary').addEventListener('click', event => {
     event.preventDefault();
     const summary = detail.querySelector('summary');
-    const top = summary.getBoundingClientRect().top;
+    const top = summary.getClientRects().length ? summary.getBoundingClientRect().top : null;
     const container = detail.parentElement;
     selectedTerm = selectedTerm === detail ? null : detail;
     partnerTerms.forEach(item => { item.open = item === selectedTerm; });
-    const delta = summary.getBoundingClientRect().top - top;
+    const delta = top === null ? 0 : summary.getBoundingClientRect().top - top;
     if (getComputedStyle(container).overflowY === 'auto') container.scrollTop += delta;
     else if (Math.abs(delta) > 1) window.scrollBy({top:delta,behavior:'instant'});
   }));
@@ -691,6 +691,24 @@ const demiandMotion = (() => {
   pager(document.querySelector('.products'),'product categories',true);
   pager(document.querySelector('.benefit-grid'),'advantage');
   pager(document.querySelector('.terms-scaling ol'),'launch stage');
+  const terms=document.querySelector('.terms-accordion');
+  const panels=[...terms.querySelectorAll('details')];
+  const tabs=document.createElement('div');tabs.className='mobile-terms-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Distributor terms');
+  panels.forEach((panel,index)=>{
+    panel.id='term-panel-'+index;
+    const button=document.createElement('button');button.type='button';button.setAttribute('role','tab');button.setAttribute('aria-controls',panel.id);
+    button.textContent=panel.querySelector('summary').firstChild.textContent.trim();
+    button.addEventListener('click',()=>{if(!panel.open)panel.querySelector('summary').click();});tabs.append(button);
+  });
+  const updateTerms=()=>[...tabs.children].forEach((button,index)=>{button.setAttribute('aria-selected',String(panels[index].open));button.tabIndex=panels[index].open?0:-1;});
+  panels.forEach(panel=>{panel.querySelector('summary').addEventListener('click',updateTerms);panel.addEventListener('toggle',updateTerms);});
+  tabs.addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();const buttons=[...tabs.children],index=buttons.indexOf(document.activeElement);
+    const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;
+    buttons[next].click();buttons[next].focus();
+  });
+  terms.prepend(tabs);updateTerms();
   const layout=document.querySelector('.marketing-layout');
   const moved=[...document.querySelectorAll('.marketing-copy .marketing-pack,.marketing-copy .marketing-note')].map(node=>{
     const marker=document.createComment('Original desktop position');node.before(marker);return {node,marker};
@@ -704,7 +722,11 @@ const demiandMotion = (() => {
   }
   disclosure([document.querySelector('.warranty-copy')],'Warranty & service details');
   disclosure([...document.querySelectorAll('.app-slide[data-app-slide="0"] .app-capability-grid,.app-slide[data-app-slide="0"] .app-proof-line')],'Programs, recipes & localization');
+  const breaks=[...document.querySelectorAll('.app-slide h2 br')].map(br=>({br,space:document.createTextNode(' ')}));
   function arrange() {
+    breaks.forEach(({br,space})=>phone.matches?br.before(space):space.remove());
+    if(phone.matches&&!panels.some(panel=>panel.open))panels[0].querySelector('summary').click();
+    updateTerms();
     moved.forEach(({node,marker})=>phone.matches?layout.append(node):marker.after(node));
     disclosures.forEach(({detail,positions})=>{
       if(phone.matches){positions[0].marker.after(detail);positions.forEach(({node})=>detail.append(node));}
