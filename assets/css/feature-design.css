@@ -630,7 +630,7 @@
  .app-story.viewport-section { min-height:0; height:auto; padding:28px 20px; gap:20px; --slide-title:30px; }
  .app-story-chapter h2.chapter-title { font-size:28px; }
  .app-story-chapter-title>p { font-size:10px; line-height:1.5; }
- .app-story-shell { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start; }
+ .app-story-shell { position:relative; display:block; }
  .app-story-frame { grid-column:1/-1; grid-row:1; height:auto; padding:32px 18px 10px; grid-template-rows:auto 44px; gap:14px; }
  .app-story-stage { min-height:0; }
  .app-story .app-slide { position:relative; inset:auto; grid-template-columns:1fr; grid-template-rows:auto auto; gap:18px; }
@@ -649,15 +649,20 @@
  .app-capability-grid span,.app-step-list span { font-size:13px; line-height:1.4; }
  .app-slide .detail-icon { display:none; }
  .app-proof-line { font-size:12px; line-height:1.5; gap:8px; }
- .app-slide-visual { min-height:0; height:300px; order:-1; }
+ .app-slide-visual { min-height:0; height:240px; order:-1; }
  .app-mockup,.app-overview-group { inset:0; }
  .app-visual-caption { font-size:9px; bottom:-4px; }
  .app-expanded-metric { font-size:64px; margin-bottom:0; }
- .app-story-arrow { grid-row:2; width:48px; height:44px; border-radius:50%; }
- .app-story-prev { justify-self:start; }
- .app-story-next { justify-self:end; }
- .app-story-pagination { gap:6px; }
- .app-story-pagination button { font-size:11px; }
+ .app-story-arrow { position:absolute; z-index:5; bottom:10px; width:36px; height:36px; border:1px solid #b8c2cf; border-radius:50%; background:#ffffffc0; color:var(--ink); box-shadow:none; }
+ .app-story-arrow:hover { background:#fff; transform:none; }
+ .app-story-prev { left:12px; }
+ .app-story-next { right:12px; }
+ .app-story-progress { margin-inline:36px; }
+ .app-story-pagination { gap:2px; }
+ .app-story-pagination button { font-size:0; padding:0; height:44px; }
+ .app-story-pagination button::before { width:5px; height:5px; border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); background:#9fa9b7; }
+ .app-story-pagination button[aria-current=true]::before { width:14px; border-radius:6px; background:var(--red); }
+ .app-story-pagination button::after { display:none; }
  .app-story-count { top:12px; right:18px; }
  .app-intelligence-levels { height:auto; min-height:0; gap:8px; padding:0; order:0; }
  .app-intelligence-level { grid-template-columns:36px 1fr; gap:12px; padding:12px 0; }

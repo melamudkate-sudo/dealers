@@ -991,7 +991,7 @@ body.film-open { overflow:hidden; }
 @media(min-width:1001px) { .contact-intro { grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr); gap:18px clamp(32px,5vw,80px); } }
 @media(max-width:800px) { .viewport-section .chapter-heading { grid-template-columns:1fr; gap:18px; } }
 .icon-sprite { position:absolute; width:0; height:0; overflow:hidden; }
-.mobile-pager,.mobile-category-nav { display:none; }
+.mobile-pager,.mobile-category-nav,.mobile-terms-tabs { display:none; }
 @media(max-width:600px) {
  :root { --x:20px; --y:28px; --chapter-title-size:32px; }
  .viewport-section .chapter-heading { gap:12px; }
@@ -1015,7 +1015,7 @@ body.film-open { overflow:hidden; }
  .benefit-icon { width:38px; height:38px; top:22px; right:22px; }
  .distributor-value { padding-block:30px; }
  .distributor-value .mobile-pager button { border-color:#ffffff40; }
- .ecosystem-system { grid-template-columns:1fr 1fr; gap:18px 16px; }
+ .ecosystem-system { grid-template-columns:1fr 1fr; grid-template-rows:auto auto auto; gap:18px 16px; }
  .ecosystem-core img { height:180px; width:80%; }
  .ecosystem-core figcaption { margin-top:6px; font-size:9px; }
  .ecosystem-node { padding:12px 0 0; }
@@ -1025,7 +1025,7 @@ body.film-open { overflow:hidden; }
  .manufacturing-layout { gap:16px; }
  .manufacturing-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
  .manufacturing-metrics>div { padding:14px 8px; border:1px solid #ffffff24; border-radius:10px; }
- .manufacturing-metrics strong { font-size:30px; letter-spacing:-.06em; white-space:nowrap; }
+ #manufacturing .manufacturing-metrics strong { font-size:28px; letter-spacing:-.06em; white-space:nowrap; }
  .manufacturing-metrics strong small { font-size:13px; }
  .manufacturing-metrics span { font-size:11px; line-height:1.4; margin-top:8px; }
  .ownership-journey { gap:8px; margin:20px 0 14px; }
@@ -1035,12 +1035,14 @@ body.film-open { overflow:hidden; }
  .ownership-ready { gap:6px; }
  .ownership-ready span { font-size:11px; padding:6px 8px; }
  .after-sales .support-backbone { gap:18px; }
+ .after-sales::before { display:none; }
  .warranty-statement { display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; align-items:center; }
  .warranty-statement h3 { grid-row:1/3; font:650 22px/1.15 var(--sans); max-width:130px; }
  .warranty-statement strong { font:700 42px/1 var(--sans); margin:0; }
  .warranty-statement>span { font-size:9px; line-height:1.4; margin:0; }
  .support-capabilities { grid-column:auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
- .support-capabilities article { padding:12px 0; }
+ .support-capabilities article { padding:12px 0; border-top:1px solid #c3cbd6; }
+ .support-capabilities article::before { display:none; }
  .support-capabilities h3 { font-size:10px; overflow-wrap:anywhere; }
  .support-capabilities p { font-size:12px; }
  .mobile-disclosure { border-top:1px solid #bcc4d0; padding:12px 0 0; }
@@ -1060,7 +1062,7 @@ body.film-open { overflow:hidden; }
  .contact .contact-details { grid-column:1; border:0; margin:0; padding:0; }
  .contact-details>span,.contact-details ul { display:none; }
  .contact .contact-details>a { margin:0; font-size:14px; }
- .contact .form-grid { grid-column:1; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+ .contact .form-grid { grid-column:1; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0; }
  .contact .form-grid label { gap:5px; min-width:0; }
  .contact .form-grid label:first-child,.contact .form-grid label:last-child { grid-column:1/-1; }
  .contact .form-grid label>span { font-size:10px; letter-spacing:0; }
