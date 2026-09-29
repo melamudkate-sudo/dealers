@@ -605,7 +605,7 @@
  .terms-scaling strong { font-size:15px; margin-top:8px; }
  .terms-scaling span { font-size:13px; }
  .terms-scaling>p { font-size:10px; margin:0; }
- .terms-accordion { order:3; width:100%; height:auto; max-height:none; overflow:visible; margin:0; padding:0 16px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+ .terms-accordion { order:3; width:100%; height:auto; max-height:none; overflow:clip; margin:0; padding:0 16px; backdrop-filter:none; -webkit-backdrop-filter:none; }
  .terms-accordion details,.terms-accordion details[open] { height:auto; min-height:0; }
  .terms-accordion summary { display:none; }
  .terms-accordion details:not([open]) { display:none; }

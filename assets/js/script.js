@@ -694,11 +694,22 @@ const demiandMotion = (() => {
   const terms=document.querySelector('.terms-accordion');
   const panels=[...terms.querySelectorAll('details')];
   const tabs=document.createElement('div');tabs.className='mobile-terms-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Distributor terms');
+  let termsResizeAnimation;
   panels.forEach((panel,index)=>{
     panel.id='term-panel-'+index;
     const button=document.createElement('button');button.type='button';button.setAttribute('role','tab');button.setAttribute('aria-controls',panel.id);
     button.textContent=panel.querySelector('summary').firstChild.textContent.trim();
-    button.addEventListener('click',()=>{if(!panel.open)panel.querySelector('summary').click();});tabs.append(button);
+    button.addEventListener('click',()=>{
+      if(panel.open)return;
+      const from=terms.getBoundingClientRect().height;
+      termsResizeAnimation?.cancel();
+      panel.querySelector('summary').click();
+      const to=terms.getBoundingClientRect().height;
+      if(phone.matches&&!reduced.matches){
+        termsResizeAnimation=terms.animate([{height:from+'px'},{height:to+'px'}],{duration:280,easing:'cubic-bezier(.22,1,.36,1)'});
+        panel.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:280,easing:'ease-out'});
+      }
+    });tabs.append(button);
   });
   const updateTerms=()=>[...tabs.children].forEach((button,index)=>{button.setAttribute('aria-selected',String(panels[index].open));button.tabIndex=panels[index].open?0:-1;});
   panels.forEach(panel=>{panel.querySelector('summary').addEventListener('click',updateTerms);panel.addEventListener('toggle',updateTerms);});
@@ -721,6 +732,7 @@ const demiandMotion = (() => {
     disclosures.push({detail,positions});
   }
   disclosure([document.querySelector('.warranty-copy')],'Warranty & service details');
+  disclosure([document.querySelector('.ownership-ready')],'Included in every market launch');
   disclosure([...document.querySelectorAll('.app-slide[data-app-slide="0"] .app-capability-grid,.app-slide[data-app-slide="0"] .app-proof-line')],'Programs, recipes & localization');
   const breaks=[...document.querySelectorAll('.app-slide h2 br')].map(br=>({br,space:document.createTextNode(' ')}));
   function arrange() {
