@@ -630,16 +630,16 @@
  .market-difference ul { display:flex; flex-wrap:wrap; gap:6px 14px; }
  .market-difference li { font-size:12px; padding:6px 0; }
 
- .app-story.viewport-section { min-height:0; height:auto; padding:28px 20px; gap:20px; --slide-title:30px; }
+ .app-story.viewport-section { min-height:0; height:auto; padding:28px 20px; gap:20px; --slide-title:30px; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
  .app-story-chapter h2.chapter-title { font-size:28px; }
  .app-story-chapter-title>p { font-size:10px; line-height:1.5; }
  .app-story-shell { position:relative; display:block; }
  .app-story-frame { grid-column:1/-1; grid-row:1; height:auto; padding:32px 18px 10px; grid-template-rows:auto 44px; gap:14px; }
  .app-story-stage { min-height:0; display:grid; }
  /* All nine slides size the same grid cell; inactive content stays inert and invisible. */
- .app-story .app-slide { position:relative; inset:auto; grid-area:1/1; grid-template-columns:1fr; grid-template-rows:minmax(240px,1fr) auto; gap:18px; align-self:stretch; }
+ .app-story .app-slide { position:relative; inset:auto; grid-area:1/1; grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(240px,1fr) max-content; gap:18px; align-self:stretch; }
  .app-story .app-slide[hidden] { display:grid!important; visibility:hidden; pointer-events:none; }
- .app-slide-copy { gap:12px; justify-content:flex-start; }
+ .app-slide-copy { display:grid; grid-auto-rows:min-content; align-content:start; min-height:0; gap:12px; }
  .app-story .app-slide h2 { font:650 30px/1.08 var(--display); }
  .app-slide h2 br { display:none; }
  .app-slide-kicker { font-size:10px; line-height:1.4; }
@@ -679,8 +679,9 @@
  .app-slide[data-app-slide="4"] .app-step-list,.app-slide[data-app-slide="6"] .app-step-list,.app-slide[data-app-slide="7"] .app-step-list,.app-slide[data-app-slide="8"] .app-step-list { display:grid; grid-template-columns:1fr 1fr; gap:0 12px; padding-left:0; border-left:0; }
  .app-slide[data-app-slide="7"] .app-step-list b { width:18px; height:18px; border:0; background:none; }
  .app-slide[data-app-slide="8"] .app-step-list li { grid-template-columns:20px 1fr; }
+ .app-slide[data-app-slide="8"] .app-step-list li:last-child { grid-column:1/-1; }
  .app-assistant-request { font-size:16px; line-height:1.4; padding:10px 12px; }
- .app-assistant-orbit { flex-wrap:wrap; gap:8px; font-size:11px; }
+ .app-assistant-orbit { display:none; }
  .world-stage { gap:20px; }
  .network-heading { margin:18px 0; }
  .network-proof { padding-top:18px; grid-template-columns:1fr; gap:18px; }

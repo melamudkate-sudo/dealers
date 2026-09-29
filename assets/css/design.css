@@ -1064,13 +1064,13 @@ body.film-open { overflow:hidden; }
  .contact h2.bookend-title { font-size:36px; line-height:1.04; }
  .contact-intro>p:not(.contact-kicker) { text-align:left; font-size:13px; line-height:1.45; }
  .contact-main { flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:12px; }
- .contact .partner-form { display:grid; grid-template-columns:1fr; gap:12px; padding:16px; border-radius:16px; }
+ .contact .partner-form { flex:1; display:grid; grid-template-columns:1fr; grid-template-rows:auto 1fr auto; align-content:stretch; gap:12px; padding:16px; border-radius:16px; }
  .contact .form-head { display:none; }
  .contact .contact-details { grid-column:1; border:0; margin:0; padding:0; }
  .contact-details>span,.contact-details ul { display:none; }
  .contact .contact-details>a { margin:0; font-size:14px; }
- .contact .form-grid { grid-column:1; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0; }
- .contact .form-grid label { gap:5px; min-width:0; }
+ .contact .form-grid { grid-column:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,1fr); align-items:center; gap:10px; margin:0; }
+ .contact .form-grid label { gap:7px; min-width:0; }
  .contact .form-grid label:first-child,.contact .form-grid label:last-child { grid-column:1/-1; }
  .contact .form-grid label>span { font-size:10px; letter-spacing:0; }
  .contact .form-grid input,.contact .form-grid select { min-height:44px; height:44px; width:100%; padding:9px 10px; font-size:16px; border-radius:8px; }
@@ -1081,6 +1081,11 @@ body.film-open { overflow:hidden; }
  .contact-bottom .logo { width:90px; }
  .contact-bottom>span:nth-of-type(2) { display:none; }
  .contact-bottom>a:last-child { margin-left:auto; font-size:10px; }
+}
+@media(max-width:600px) and (min-height:741px) {
+ .contact .form-grid { grid-template-columns:1fr; grid-template-rows:repeat(4,1fr); }
+ .contact .form-grid label>span { font-size:12px; }
+ .contact .form-grid input,.contact .form-grid select { height:48px; }
 }
 @media(max-width:600px) and (max-height:740px) {
  .contact.viewport-section { padding:14px 20px; gap:10px; }
