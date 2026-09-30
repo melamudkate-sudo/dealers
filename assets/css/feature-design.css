@@ -330,7 +330,7 @@
 .market-flow li:last-child svg { stroke:#fff; }
 .market-flow li>strong { display:block; font:600 clamp(15px,1.4vw,22px)/1.2 var(--display); text-transform:uppercase; }
 .market-flow li>span { display:block; margin-top:10px; font-size:14px; line-height:1.45; color:var(--copy); }
-@media(max-width:900px) { .market-system { grid-template-columns:1fr; gap:24px; } .market-tabs { grid-template-columns:1fr 1fr; gap:10px; } .market-tabs button { font-size:17px; padding:18px 12px; } }
+@media(max-width:1000px) { .market-system { grid-template-columns:1fr; gap:24px; } .market-tabs { grid-template-columns:1fr 1fr; gap:10px; } .market-tabs button { font-size:17px; padding:18px 12px; } }
 
 /* Each market state resolves within the same component timing envelope. */
 .market-portfolio figure:first-child { --spread:28px; }
@@ -573,7 +573,22 @@
  .market-network strong { font-size:125px; }
 }
 
-/* Phone compositions. Tablet and desktop retain their original layouts. */
+/* Tablet hero follows its content instead of stretching to a tall portrait viewport. */
+@media(min-width:601px) and (max-width:1000px) {
+ .hero.viewport-section { height:auto; min-height:0; padding:96px 32px 24px; grid-template-columns:1.1fr 1fr; grid-template-rows:auto auto; gap:24px; }
+ .hero-copy { align-self:center; padding-top:0; }
+ .hero h1.bookend-title { font-size:clamp(36px,5vw,48px); margin:18px 0; }
+ .hero .lead { font-size:16px; line-height:1.55; }
+ .hero-object { height:clamp(340px,52vw,500px); padding:8px 0; }
+ .hero-object .note-top { font-size:10px; }
+ .hero-object-caption { gap:12px; }
+ .hero-object-caption .object-note,.hero-object-caption .model-hint { font-size:10px; }
+ .hero-category-index { gap:10px; margin-top:22px; }
+ .hero-category-index span { font-size:11px; }
+ .hero-footer>.mono { display:none; }
+}
+
+/* Phone compositions. Desktop retains its original layout. */
 @media(max-width:600px) {
  .hero.viewport-section { height:100svh; min-height:700px; padding:88px 20px 18px; grid-template-columns:1fr; grid-template-rows:auto minmax(280px,1fr) auto; gap:12px; overflow:clip; }
  .hero-copy { padding-top:0; }
