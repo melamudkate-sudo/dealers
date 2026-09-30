@@ -504,6 +504,15 @@ const demiandMotion = (() => {
   updateScroll();
 
   const model = document.querySelector('.hero-model');
+  const desktopModel = matchMedia('(min-width:1001px) and (min-aspect-ratio:1/1)');
+  const sizeModel = () => {
+    const radius = desktopModel.matches ? '88%' : '95%';
+    model.setAttribute('min-camera-orbit', `auto 55deg ${radius}`);
+    model.setAttribute('max-camera-orbit', `auto 88deg ${radius}`);
+    model.setAttribute('camera-orbit', `28deg 80deg ${radius}`);
+  };
+  desktopModel.addEventListener('change', sizeModel);
+  sizeModel();
   const stage = document.querySelector('.model-stage');
   const hero = document.querySelector('.hero');
   let dragging = false;

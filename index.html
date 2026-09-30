@@ -6,6 +6,9 @@
   <meta name="description" content="DEMIAND international distribution partnership" />
   <title>DEMIAND — International Distribution</title>
   <link rel="icon" type="image/png" href="assets/images/demiand-logo-black.png" />
+  <link rel="preload" as="image" href="assets/images/hero-model-poster.webp" fetchpriority="high" />
+  <link rel="preload" as="fetch" crossorigin href="assets/models/demiand-dk5100-fast.glb" fetchpriority="high" />
+  <link rel="modulepreload" href="assets/vendor/model-viewer/model-viewer.min.js" />
   <link rel="preload" as="image" href="assets/images/marketing-01-poster.jpg" />
   <link rel="preload" as="image" href="assets/images/marketing-02-poster.jpg" />
   <link rel="preload" as="image" href="assets/images/marketing-03-poster.jpg" />
@@ -13,11 +16,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/design.css?v=20260930-production" />
-  <link rel="stylesheet" href="assets/css/feature-design.css?v=20260930-handoff" />
-  <link rel="stylesheet" href="assets/css/commercial-design.css?v=20260930-reels" />
+  <link rel="stylesheet" href="assets/css/design.css?v=20260930-media-final" />
+  <link rel="stylesheet" href="assets/css/feature-design.css?v=20260930-media-final" />
+  <link rel="stylesheet" href="assets/css/commercial-design.css?v=20260930-media-final" />
   <link rel="stylesheet" href="assets/css/navigation.css?v=20260930-handoff" />
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js"></script>
+  <script type="module" src="assets/js/model-viewer-init.js"></script>
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
@@ -50,7 +53,7 @@
       <div class="hero-object reveal" aria-label="Interactive DEMIAND DK-5100 product model">
         <div class="object-note note-top">01 / INTERACTIVE 3D</div>
         <div class="model-stage">
-<model-viewer class="hero-model" src="assets/models/demiand-dk5100.glb?v=black-web-20260930" poster="assets/images/air-fryer-5100.png" alt="DEMIAND DK-5100 air fryer, interactive 3D model" camera-controls disable-pan disable-zoom auto-rotate auto-rotate-delay="1800" rotation-per-second="8deg" interaction-prompt="none" shadow-intensity=".16" shadow-softness="1" exposure="1.05" environment-image="neutral" camera-orbit="28deg 80deg 95%" min-camera-orbit="auto 55deg 95%" max-camera-orbit="auto 88deg 95%" field-of-view="30deg"><div class="model-loader" slot="progress-bar"><i></i></div></model-viewer>
+<model-viewer class="hero-model" src="assets/models/demiand-dk5100-fast.glb" loading="eager" reveal="auto" poster="assets/images/hero-model-poster.webp" alt="DEMIAND DK-5100 air fryer, interactive 3D model" camera-controls disable-pan disable-zoom auto-rotate auto-rotate-delay="1800" rotation-per-second="8deg" interaction-prompt="none" shadow-intensity=".16" shadow-softness="1" exposure="1.05" environment-image="neutral" camera-orbit="28deg 80deg 95%" min-camera-orbit="auto 55deg 95%" max-camera-orbit="auto 88deg 95%" field-of-view="30deg"><img class="hero-model-poster" slot="poster" src="assets/images/hero-model-poster.webp" fetchpriority="high" alt="DEMIAND DK-5100 black air fryer" /><div class="model-loader" slot="progress-bar"><i></i></div></model-viewer>
         </div>
         <div class="hero-object-caption"><div class="object-note note-bottom">DK-5100<br />SMARTCOOK SERIES</div><div class="model-hint"><i>↔</i>Drag to rotate</div></div>
       </div>
@@ -326,6 +329,6 @@
     <div class="film-placeholder" aria-label="Production video preview"><div class="film-aperture" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m9 6 9 6-9 6V6Z" fill="currentColor"/></svg></div></div>
     <video controls playsinline preload="auto" src="assets/videos/production.mp4" poster="assets/images/production-poster.jpg" hidden aria-label="DEMIAND production film"></video>
   </dialog>
-  <script src="assets/js/script.js?v=20260930-reels"></script>
+  <script src="assets/js/script.js?v=20260930-media-final"></script>
 </body>
 </html>

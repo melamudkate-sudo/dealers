@@ -710,20 +710,20 @@ html { scroll-behavior:auto; }
 .manufacturing .section-label, .manufacturing .split-heading>p { color:#b9bdc5; }
 .manufacturing h2 em { color:white; }
 .manufacturing-layout { position:relative; padding-bottom:12px; }
-.production-film { position:relative; width:100%; margin:0; overflow:hidden; border-radius:var(--radius-media); }
+.production-film { position:relative; isolation:isolate; width:100%; margin:0; overflow:hidden; border-radius:var(--radius-media); }
 .production-video { position:relative; display:flex; align-items:center; justify-content:center; cursor:pointer; width:100%; height:clamp(300px,40dvh,460px); flex-direction:column; gap:24px; background:#101114; border-color:#ffffff28; color:#fff; border-radius:var(--radius-media); overflow:hidden; }
 .production-poster { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 48%; }
 .production-video .film-mark { position:absolute; top:16px; left:16px; width:56px; height:56px; z-index:1; background:#171a1dcc; }
 @media(max-width:1000px) { #manufacturing .production-video { height:auto; aspect-ratio:16/9; } #manufacturing .manufacturing-metrics { margin-top:12px; } }
 .production-video::before, .production-video::after { border-color:#ffffff55; }
 .production-video .placeholder-label { padding:0; font-size:14px; letter-spacing:.2em; }
-.film-mark { display:grid; place-items:center; padding-left:5px; width:88px; height:88px; border-radius:50%; border:1px solid #ffffff60; background:#ffffff16; box-shadow:inset 0 1px 0 #fff6,0 12px 40px #0002; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); font-size:24px; }
+.film-mark { display:grid; place-items:center; padding-left:5px; width:88px; height:88px; border-radius:50%; border:1px solid #ffffff60; background:#292d33; box-shadow:inset 0 1px 0 #fff6,0 12px 40px #0002; font-size:24px; }
 .film-format { font-size:12px; color:#d1d3d7; letter-spacing:.09em; }
 .production-film>video { display:block; width:100%; height:clamp(300px,40dvh,460px); object-fit:cover; }
 .production-film figcaption { position:absolute; top:24px; bottom:auto; left:24px; right:24px; display:flex; align-items:center; justify-content:space-between; gap:20px; color:#f4f4f5; font-size:16px; pointer-events:none; }
 .production-film .glass-label { background:#181a1e80; border-color:#ffffff30; box-shadow:inset 0 1px 0 #fff2; }
 .manufacturing-metrics { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin:-44px 32px 0; }
-.manufacturing-metrics>div { padding:24px 28px; border:1px solid #ffffff38; border-radius:var(--radius-card); background:linear-gradient(135deg,#454a50a8,#202329b8); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); box-shadow:inset 0 1px 0 #ffffff30,0 16px 32px #0002; }
+.manufacturing-metrics>div { padding:24px 28px; border:1px solid #ffffff38; border-radius:var(--radius-card); background:linear-gradient(135deg,#373c43,#23262c); box-shadow:inset 0 1px 0 #ffffff30,0 16px 32px #0002; }
 .manufacturing-metrics strong { display:block; font:500 clamp(46px,4.4vw,68px)/1 var(--display); letter-spacing:-.05em; }
 .manufacturing-metrics strong small { font-size:.45em; }
 .manufacturing-metrics span { display:block; margin-top:10px; color:#d3d5db; font-size:18px; }
@@ -961,7 +961,7 @@ html { scroll-behavior:auto; }
 .tab-hidden *, .tab-hidden *::before, .tab-hidden *::after { animation-play-state:paused!important; }
 
 /* Production film remains an honest placeholder until a source is supplied. */
-.production-video:hover .film-mark { background:#ffffff2b; }
+.production-video:hover .film-mark { background:#454a52; }
 .production-video:focus-visible { outline:3px solid white; outline-offset:-6px; }
 .film-dialog { position:fixed; inset:0; margin:auto; width:min(960px,calc(100vw - 32px)); max-height:calc(100dvh - 32px); overflow:auto; overscroll-behavior:contain; padding:20px; border:1px solid #ffffff30; border-radius:24px; background:linear-gradient(135deg,#34383ee8,#171a1feb); color:white; box-shadow:0 24px 90px #0006; }
 .film-dialog::backdrop { background:#111821b8; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
