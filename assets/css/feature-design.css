@@ -11,8 +11,8 @@
   border: 0;
 }
 .hero-copy {
-  align-self: start;
-  padding-top: 20px;
+  align-self: center;
+  padding-top: 0;
   min-width: 0;
 }
 .hero h1 {
@@ -50,7 +50,7 @@
 .hero-object {
   min-width: 0;
   position: relative;
-  height: min(67dvh,720px);
+  height: min(60dvh,600px);
   display: grid;
   grid-template-rows: auto minmax(0,1fr) auto;
   padding: 10px 0;
@@ -294,20 +294,20 @@
 .market-growth small { display:block; margin-bottom:10px; font-size:11px; letter-spacing:.12em; }
 .market-growth strong { display:block; font:600 clamp(48px,5vw,78px)/1 var(--display); letter-spacing:-.06em; }
 .market-growth>i { color:var(--red); font:400 32px/1 var(--display); }
-.market-growth>span { grid-column:1/-1; margin-top:-10px; font-size:12px; letter-spacing:.08em; }
-.market-growth>span b { color:var(--red); font:600 24px/1 var(--display); margin-right:6px; }
+.market-growth>span { grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:14px; margin-top:0; font-size:13px; letter-spacing:.06em; }
+.market-growth>span b { color:var(--red); font:600 48px/1 var(--display); letter-spacing:-.04em; }
 .market-trends { display:flex; align-items:center; }
 .market-trends ol { width:100%; margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:0 28px; }
 .market-trends li { display:grid; grid-template-columns:22px 30px 1fr; gap:10px; align-items:center; min-height:70px; border-top:1px solid #cdd2da; font-size:15px; line-height:1.35; }
 .market-trends li:last-child { grid-column:1/-1; }
 .market-trends b { color:var(--red); font:500 11px/1 var(--display); }
 .market-trends svg { width:26px; height:26px; fill:none; stroke:#68717f; stroke-width:1.25; stroke-linecap:round; stroke-linejoin:round; }
-.market-difference { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center; }
+.market-difference { display:grid; grid-template-columns:1fr; gap:16px; align-content:center; }
 .benchmark-pair { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.benchmark-pair>div { padding:18px 14px; border:1px solid #fff; border-radius:var(--radius-card); background:#ffffffa8; }
+.benchmark-pair>div { display:flex; align-items:center; gap:14px; padding:18px 14px; border:1px solid #fff; border-radius:var(--radius-card); background:#ffffffa8; }
 .benchmark-pair strong { display:block; color:var(--red); font:600 clamp(46px,4.4vw,68px)/1 var(--display); letter-spacing:-.06em; }
-.benchmark-pair span { display:block; margin-top:10px; color:var(--copy); font-size:13px; line-height:1.4; }
-.market-difference ul { margin:0; padding:0; list-style:none; }
+.benchmark-pair span { display:block; margin:0; color:var(--copy); font-size:13px; line-height:1.4; }
+.market-difference ul { display:flex; flex-wrap:wrap; gap:0 18px; margin:0; padding:0; list-style:none; }
 .market-difference li { padding:9px 0; border-top:1px solid #cdd2da; font-size:14px; font-weight:600; }
 .market-difference li::before { content:'+'; color:var(--red); margin-right:10px; }
 .market-network { position:relative; display:flex; align-items:center; justify-content:center; }
@@ -635,13 +635,13 @@
  .market-growth strong { font-size:clamp(28px,9.2vw,40px); }
  .market-growth>i { font-size:22px; }
  .market-growth>span { align-self:stretch; display:flex; flex-direction:column; justify-content:center; margin:0; font-size:13px; }
- .market-growth>span b { display:block; font-size:56px; margin:0 0 8px; }
+ .market-growth>span b { display:block; font-size:48px; margin:0; }
  .market-trends ol { height:100%; grid-template-columns:1fr; grid-template-rows:repeat(5,1fr); }
  .market-trends li { grid-template-columns:20px 24px 1fr; min-height:52px; font-size:14px; gap:8px; }
  .market-trends li:last-child { grid-column:auto; }
  .market-trends svg { width:24px; height:24px; stroke:var(--red); }
  .market-difference { grid-template-columns:1fr; grid-template-rows:1fr max-content; align-items:stretch; gap:14px; }
- .benchmark-pair>div { padding:12px; }
+ .benchmark-pair>div { display:block; padding:12px; }
  .benchmark-pair strong { font-size:clamp(34px,12vw,50px); }
  .benchmark-pair span { font-size:13px; }
  .market-difference ul { display:grid; grid-template-columns:1fr 1fr; gap:0 12px; }

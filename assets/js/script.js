@@ -339,10 +339,33 @@ const demiandMotion = (() => {
   }
 
   const partnerTerms = [...document.querySelectorAll('.terms-accordion details')];
+  // Long desktop topics open outside the fixed-height terms panel.
+  const termsDialog = document.createElement('dialog');
+  termsDialog.className = 'terms-dialog';
+  termsDialog.setAttribute('aria-labelledby', 'terms-dialog-title');
+  termsDialog.innerHTML = '<header><h2 id="terms-dialog-title"></h2><button type="button" aria-label="Close partnership details">×</button></header><div class="terms-dialog-content"></div>';
+  document.body.append(termsDialog);
+  const termsDialogContent = termsDialog.querySelector('.terms-dialog-content');
+  let dialogSource;
+  termsDialog.querySelector('button').addEventListener('click', () => termsDialog.close());
+  termsDialog.addEventListener('click', event => { if (event.target === termsDialog) { const r=termsDialog.getBoundingClientRect(); if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)termsDialog.close(); } });
+  termsDialog.addEventListener('close', () => {
+    if (dialogSource) { dialogSource.append(...termsDialogContent.childNodes); dialogSource.querySelector('summary').focus({preventScroll:true}); }
+    document.body.classList.remove('terms-dialog-open');
+  });
+  matchMedia('(max-width:600px)').addEventListener('change', () => { if(termsDialog.open)termsDialog.close(); });
   let selectedTerm = partnerTerms.find(detail => detail.open);
   partnerTerms.forEach(detail => detail.querySelector('summary').addEventListener('click', event => {
     event.preventDefault();
     const summary = detail.querySelector('summary');
+    if(innerWidth > 600 && detail.matches('.partnership-details,.demand-generation-details')) {
+      dialogSource = detail;
+      termsDialog.querySelector('h2').textContent = summary.firstChild.textContent.trim();
+      termsDialogContent.append(...[...detail.childNodes].filter(node => node !== summary));
+      document.body.classList.add('terms-dialog-open');
+      termsDialog.showModal();
+      return;
+    }
     const top = summary.getClientRects().length ? summary.getBoundingClientRect().top : null;
     const container = detail.parentElement;
     selectedTerm = selectedTerm === detail ? null : detail;
