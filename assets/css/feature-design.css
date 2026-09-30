@@ -586,7 +586,7 @@
  .hero-explore { padding:10px 14px; font-size:12px; gap:12px; background:#ffffffd9; }
  .hero-object { height:100%; min-height:280px; padding:0 0 75px; grid-template-rows:1fr; }
  .hero-object .note-top,.hero-object-caption { display:none; }
- .hero .model-stage { transform:scale(1.16); }
+ .hero .model-stage { transform:translateY(-10px) scale(1.02); }
  .hero-model { transform:none; }
  .hero::after { width:75vw; height:75vw; top:40%; right:12%; }
  .hero-footer { padding-top:12px; gap:0; }
@@ -600,35 +600,39 @@
  .market-tabs button { grid-template-columns:20px 1fr; gap:6px; padding:12px 10px; font-size:12px; min-height:58px; border:1px solid #d9dde4; border-radius:10px; }
  .market-tabs button>b { display:none; }
  .market-tabs button>span { font-size:11px; }
- .market-panels { height:auto; min-height:410px; max-height:none; padding:18px; }
- .market-visual { height:260px; }
+ .market-panels { display:grid; height:auto; min-height:0; max-height:none; padding:18px; }
+ .market-panels article { display:grid; grid-area:1/1; grid-template-rows:minmax(260px,1fr) max-content; gap:16px; }
+ .market-panels article[hidden] { display:grid!important; visibility:hidden; pointer-events:none; }
+ .market-visual { height:auto; min-height:260px; }
  .market-leadership { grid-template-columns:1fr; grid-template-rows:auto 1fr; gap:16px; }
  .market-primary { display:flex; align-items:center; gap:16px; }
- .market-primary strong { font-size:66px; }
+ .market-primary strong { font-size:68px; }
  .market-primary span { margin:0; font-size:10px; max-width:140px; }
  .market-stat-grid { gap:8px; }
- .market-stat-grid>div { padding:10px; }
- .market-stat-grid b { font-size:22px; }
- .market-stat-grid span { font-size:11px; }
+ .market-stat-grid>div { display:flex; flex-direction:column; justify-content:center; padding:12px 10px; }
+ .market-stat-grid b { font-size:clamp(20px,6.6vw,28px); }
+ .market-stat-grid span { font-size:12px; }
  .market-summary { padding-top:14px; }
  .market-summary h3 { font:600 20px/1.2 var(--sans); }
  .market-summary p { font-size:13px; line-height:1.45; margin-top:8px; }
- .market-growth { gap:16px 8px; align-content:center; }
- .market-growth>div { padding:20px 4px; }
- .market-growth strong { font-size:34px; }
+ .market-growth { grid-template-rows:1fr 1fr; gap:12px 8px; align-content:stretch; }
+ .market-growth>div { display:grid; align-content:center; align-self:stretch; padding:14px 4px; }
+ .market-growth strong { font-size:clamp(28px,9.2vw,40px); }
  .market-growth>i { font-size:22px; }
- .market-growth>span { margin:0; font-size:13px; }
- .market-growth>span b { display:block; font-size:40px; margin:0 0 8px; }
- .market-trends ol { grid-template-columns:1fr; }
- .market-trends li { grid-template-columns:20px 24px 1fr; min-height:48px; font-size:13px; gap:8px; }
+ .market-growth>span { align-self:stretch; display:flex; flex-direction:column; justify-content:center; margin:0; font-size:13px; }
+ .market-growth>span b { display:block; font-size:56px; margin:0 0 8px; }
+ .market-trends ol { height:100%; grid-template-columns:1fr; grid-template-rows:repeat(5,1fr); }
+ .market-trends li { grid-template-columns:20px 24px 1fr; min-height:52px; font-size:14px; gap:8px; }
  .market-trends li:last-child { grid-column:auto; }
- .market-trends svg { width:22px; height:22px; }
- .market-difference { grid-template-columns:1fr; gap:12px; }
+ .market-trends svg { width:24px; height:24px; stroke:var(--red); }
+ .market-difference { grid-template-columns:1fr; grid-template-rows:1fr max-content; align-items:stretch; gap:14px; }
  .benchmark-pair>div { padding:12px; }
- .benchmark-pair strong { font-size:40px; }
- .benchmark-pair span { font-size:12px; }
- .market-difference ul { display:flex; flex-wrap:wrap; gap:6px 14px; }
- .market-difference li { font-size:12px; padding:6px 0; }
+ .benchmark-pair strong { font-size:clamp(34px,12vw,50px); }
+ .benchmark-pair span { font-size:13px; }
+ .market-difference ul { display:grid; grid-template-columns:1fr 1fr; gap:0 12px; }
+ .market-difference li { font-size:12px; padding:8px 0; }
+ .market-difference li:last-child { grid-column:1/-1; }
+ .market-difference li::before { margin-right:6px; }
 
  .app-story.viewport-section { min-height:0; height:auto; padding:28px 20px; gap:20px; --slide-title:30px; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
  .app-story-chapter h2.chapter-title { font-size:28px; }

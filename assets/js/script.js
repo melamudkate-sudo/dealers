@@ -705,10 +705,17 @@ const demiandMotion = (() => {
       termsResizeAnimation?.cancel();
       panel.querySelector('summary').click();
       const to=terms.getBoundingClientRect().height;
+      const revealContent=()=>{
+        if(!phone.matches||!panel.open||index<6)return;
+        const targetTop=Math.max(document.querySelector('.nav').getBoundingClientRect().bottom+20,Math.min(innerHeight*.25,200));
+        const distance=panel.getBoundingClientRect().top-targetTop;
+        if(distance>8)window.scrollBy({top:distance,behavior:reduced.matches?'instant':'smooth'});
+      };
       if(phone.matches&&!reduced.matches){
         termsResizeAnimation=terms.animate([{height:from+'px'},{height:to+'px'}],{duration:280,easing:'cubic-bezier(.22,1,.36,1)'});
         panel.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:280,easing:'ease-out'});
-      }
+        termsResizeAnimation.finished.then(revealContent).catch(()=>{});
+      }else revealContent();
     });tabs.append(button);
   });
   const updateTerms=()=>[...tabs.children].forEach((button,index)=>{button.setAttribute('aria-selected',String(panels[index].open));button.tabIndex=panels[index].open?0:-1;});
