@@ -584,6 +584,14 @@ const demiandMotion = (() => {
       ], 'BLENDER')
     }
   };
+  // Start all approved catalogue photos with the page, at low priority so the
+  // hero still gets bandwidth first. Shared model/color files are requested once.
+  const catalogPhotos = new Set(Object.values(catalog).flatMap(category => category.models.flatMap(model => model.colors.map(color => color.image))));
+  catalogPhotos.forEach(href => {
+    const preload = document.createElement('link');
+    preload.rel = 'preload'; preload.as = 'image'; preload.href = href; preload.fetchPriority = 'low';
+    document.head.append(preload);
+  });
   const section = document.getElementById('portfolio');
   const categories = section.querySelector('.products');
   const categoryHeading = section.querySelector('.category-heading');
@@ -832,15 +840,69 @@ const demiandMotion = (() => {
   phone.addEventListener('change',arrange);arrange();
 })();
 
-// Four marketing previews. Add a repository-relative data-video-src to each
-// article when its approved film arrives; until then the artwork stays explicit.
+// Preload reels near the viewport; only the visible, selected reel plays.
 (() => {
   const carousel = document.querySelector('.marketing-carousel');
   if (!carousel) return;
   const slides = [...carousel.querySelectorAll('[data-marketing-slide]')];
   const buttons = [...carousel.querySelectorAll('.marketing-pagination button')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let current = 0, animation;
+  let current = 0, animation, inView = false, warmed = false;
+  const screen = carousel.querySelector('.marketing-screen');
+  const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" fill="currentColor"/></svg>';
+  const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM15 5h4v14h-4z" fill="currentColor"/></svg>';
+  const media = slides.map((slide, index) => {
+    if (!slide.dataset.videoSrc) return null;
+    const video = document.createElement('video');
+    video.muted = true; video.defaultMuted = true; video.setAttribute('muted', '');
+    video.playsInline = true; video.loop = true; video.preload = 'none';
+    video.disablePictureInPicture = true; video.tabIndex = -1;
+    video.setAttribute('aria-label', `DEMIAND reel ${index + 1}`);
+    video.poster = slide.dataset.videoPoster || '';
+    const toggle = document.createElement('button'); toggle.type = 'button'; toggle.className = 'reel-toggle';
+    const item = {video, toggle, userPaused:false};
+    const updateControl = () => {
+      toggle.innerHTML = video.paused ? playIcon : pauseIcon;
+      toggle.setAttribute('aria-label', `${video.paused ? 'Play' : 'Pause'} video ${index + 1}`);
+      toggle.title = video.paused ? 'Play' : 'Pause';
+    };
+    video.addEventListener('play', updateControl); video.addEventListener('pause', updateControl);
+    video.addEventListener('error', updateControl); updateControl();
+    toggle.addEventListener('click', () => {
+      item.userPaused = !video.paused;
+      syncPlayback();
+    });
+    slide.append(video, toggle);
+    return item;
+  });
+  function load(index) {
+    const item = media[index];
+    if (!item || item.video.getAttribute('src')) return;
+    item.video.preload = 'auto'; item.video.src = slides[index].dataset.videoSrc; item.video.load();
+  }
+  function warm() {
+    if (warmed) return;
+    warmed = true;
+    load(current);
+    // Four small fast-start MP4s can buffer before the carousel enters view.
+    media.forEach((_, index) => load(index));
+  }
+  function syncPlayback() {
+    media.forEach((item, index) => {
+      if (!item) return;
+      if (index !== current || !inView || document.hidden || item.userPaused) {
+        item.video.pause(); return;
+      }
+      load(index);
+      item.video.play().catch(() => {
+        // Low Power Mode and browser policies can require a manual tap.
+        if (item.video.paused) {
+          item.toggle.innerHTML = playIcon;
+          item.toggle.setAttribute('aria-label', `Play video ${index + 1}`);
+        }
+      });
+    });
+  }
   function select(index, direction = 1) {
     const next = (index + slides.length) % slides.length;
     if (next === current) return;
@@ -848,11 +910,13 @@ const demiandMotion = (() => {
     slides[current].querySelector('video')?.pause();
     current = next;
     slides.forEach((slide, i) => { slide.hidden = i !== current; });
+    if (media[current]) { media[current].userPaused = false; media[current].video.currentTime = 0; }
     buttons.forEach((button, i) => {
       if (i === current) button.setAttribute('aria-current', 'true');
       else button.removeAttribute('aria-current');
     });
     carousel.querySelector('.marketing-status').textContent = `Video ${current + 1} of ${slides.length}`;
+    syncPlayback();
     if (!reduced.matches) animation = slides[current].animate([
       { opacity:0, transform:`translateX(${direction * 22}px) scale(.985)` },
       { opacity:1, transform:'none' }
@@ -868,8 +932,7 @@ const demiandMotion = (() => {
     event.preventDefault(); select(actions[event.key], event.key === 'ArrowLeft' ? -1 : 1);
   });
   let start;
-  const screen = carousel.querySelector('.marketing-screen');
-  screen.addEventListener('pointerdown', event => { if (event.pointerType !== 'mouse') start = {x:event.clientX,y:event.clientY}; });
+  screen.addEventListener('pointerdown', event => { if (event.pointerType !== 'mouse' && !event.target.closest('button')) start = {x:event.clientX,y:event.clientY}; });
   screen.addEventListener('pointerup', event => {
     if (!start) return;
     const x = event.clientX - start.x, y = event.clientY - start.y;
@@ -878,15 +941,18 @@ const demiandMotion = (() => {
   });
   screen.addEventListener('pointercancel', () => { start = null; });
   reduced.addEventListener('change', () => { if (reduced.matches) animation?.cancel(); });
-  slides.forEach(slide => {
-    if (!slide.dataset.videoSrc) return;
-    const video = document.createElement('video');
-    video.src = slide.dataset.videoSrc; video.controls = true; video.playsInline = true; video.preload = 'none';
-    video.poster = slide.querySelector('.marketing-product').src;
-    slide.querySelector('.marketing-product').hidden = true;
-    slide.querySelector('.marketing-video-caption').hidden = true;
-    slide.append(video);
-  });
+  const preloadObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) { warm(); preloadObserver.disconnect(); }
+  }, {rootMargin:'1600px 0px'});
+  preloadObserver.observe(screen);
+  new IntersectionObserver(entries => {
+    inView = entries[0].isIntersecting && entries[0].intersectionRatio >= .15;
+    if (inView) warm();
+    syncPlayback();
+  }, {threshold:[0,.15]}).observe(screen);
+  document.addEventListener('visibilitychange', syncPlayback);
+  window.addEventListener('pagehide', () => media.forEach(item => item?.video.pause()));
+  window.addEventListener('pageshow', syncPlayback);
 })();
 
 // Set data-video-src on the trigger when the approved production film is ready.
