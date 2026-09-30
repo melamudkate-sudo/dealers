@@ -542,35 +542,46 @@ const demiandMotion = (() => {
   });
 })();
 
-/* One reference photo per category until individual model/color photography is ready. */
+/* Approved model photography. Shared filenames deliberately serve paired models. */
 (() => {
-  const colors = [
-    { label: 'Pearl', swatch: '#dedfe2' },
-    { label: 'Graphite', swatch: '#474a51' },
-    { label: 'Silver', swatch: '#b7bbc3' },
-    { label: 'Slate', swatch: '#8c929d' }
-  ];
-  const models = (items, singular) => items.map(([sku, colorCount, image]) => ({
+  const colors = {
+    white: { label: 'White', swatch: '#f1f0ec' },
+    black: { label: 'Black', swatch: '#242528' },
+    silver: { label: 'Silver', swatch: '#b7bbc3' },
+    burgundy: { label: 'Burgundy', swatch: '#6a2937' }
+  };
+  const models = (items, singular) => items.map(([sku, photos]) => ({
     name: `${singular} / ${sku}`,
-    image,
-    colors: colors.slice(0, colorCount)
+    colors: ['black', 'white', 'silver', 'burgundy'].filter(color => photos[color]).map(color => ({ ...colors[color], image: `assets/images/catalog/${photos[color]}` }))
   }));
   const catalog = {
     'air-fryers': {
       title: 'AIR FRYERS', image: 'assets/images/catalog-airfryer-2700.png', photoAlt: 'DEMIAND DK-2700 air fryer',
       models: models([
-        ['DK-2500', 2], ['DK-2700', 2], ['DK-2400', 3],
-        ['DK-2100', 3], ['DK-5100', 3],
-        ['DK-2200', 3], ['DK-5000', 2], ['DK-5300', 2]
+        ['DK-2500', { white:'2500-5300wh.webp', black:'2500-5300bl.webp' }],
+        ['DK-2700', { white:'2700wh.jpg', black:'2700bl.webp' }],
+        ['DK-2400', { white:'2200-2400wh.jpg', black:'2200-2400bl.jpg', silver:'2200-2400sil.jpg' }],
+        ['DK-2100', { white:'2100wh.jpg', black:'2100bl.jpg' }],
+        ['DK-5100', { white:'5100wh.webp', black:'5100bl.png', silver:'5100sil.webp' }],
+        ['DK-2200', { white:'2200-2400wh.jpg', black:'2200-2400bl.jpg', silver:'2200-2400sil.jpg' }],
+        ['DK-5000', { white:'5000wh.webp', black:'5000bl.webp' }],
+        ['DK-5300', { white:'2500-5300wh.webp', black:'2500-5300bl.webp' }]
       ], 'AIR FRYER')
     },
     'coffee-makers': {
       title: 'COFFEE MAKERS', image: 'assets/images/catalog-coffee-3500.png', photoAlt: 'DEMIAND KF-3500 coffee maker',
-      models: models([['KF-3500', 3], ['KF-3100', 2], ['KF-3200', 1]], 'COFFEE MAKER')
+      models: models([
+        ['KF-3500', { white:'3500wh.webp', black:'3500bl.jpg', silver:'3500sil.webp' }],
+        ['KF-3100', { black:'3100bl.jpg' }],
+        ['KF-3200', { white:'3200wh.jpg', black:'3200bl.jpg' }]
+      ], 'COFFEE MAKER')
     },
     blenders: {
       title: 'BLENDERS', image: 'assets/images/catalog-blender-1200.png', photoAlt: 'DEMIAND BL-1200 blender',
-      models: models([['BL-1200', 2], ['DB-E1300', 4]], 'BLENDER')
+      models: models([
+        ['BL-1200', { white:'1200wh.jpg', black:'1200bl.jpg' }],
+        ['DB-E1300', { white:'1300wh.jpg', black:'1300bl.jpg', silver:'1300sil.jpg', burgundy:'1300bordo.1.a.jpg' }]
+      ], 'BLENDER')
     }
   };
   const section = document.getElementById('portfolio');
@@ -596,21 +607,36 @@ const demiandMotion = (() => {
   }
   function render(data) {
     rail.replaceChildren();
-    data.models.forEach(model => {
+    data.models.forEach((model, modelIndex) => {
       const card = document.createElement('article'); card.className = 'catalog-card';
       card.setAttribute('aria-label', model.name);
       const frame = document.createElement('div'); frame.className = 'catalog-image';
-      const image = new Image(); image.src = model.image || data.image; image.alt = model.name;
-      image.width = 2500; image.height = 2000; image.draggable = false; image.decoding = 'async';
+      const image = new Image(); image.alt = `${model.name} — ${model.colors[0].label}`;
+      image.width = 2000; image.height = 2000; image.draggable = false; image.decoding = 'async';
+      image.loading = modelIndex < 2 ? 'eager' : 'lazy';
+      image.src = model.colors[0].image;
       frame.append(image);
       const name = document.createElement('h3'); name.textContent = model.name;
-      const swatches = document.createElement('div'); swatches.className = 'catalog-swatches'; swatches.setAttribute('role', 'group'); swatches.setAttribute('aria-label', `${model.name}: illustrative color options`);
+      const swatches = document.createElement('div'); swatches.className = 'catalog-swatches'; swatches.setAttribute('role', 'group'); swatches.setAttribute('aria-label', `${model.name}: available colors`);
+      let selectionVersion = 0;
       model.colors.forEach((color, i) => {
         const button = document.createElement('button'); button.type = 'button'; button.style.setProperty('--swatch', color.swatch);
         button.setAttribute('aria-label', `${model.name}: ${color.label}`); button.title = color.label;
         button.setAttribute('aria-pressed', String(i === 0));
-        button.addEventListener('click', () => {
-          swatches.querySelectorAll('button').forEach(node => node.setAttribute('aria-pressed', String(node === button)));
+        button.addEventListener('click', async () => {
+          const version = ++selectionVersion;
+          frame.setAttribute('aria-busy', 'true');
+          const nextImage = new Image(); nextImage.src = color.image;
+          try {
+            await nextImage.decode();
+            if (version !== selectionVersion) return;
+            image.src = color.image; image.alt = `${model.name} — ${color.label}`;
+            swatches.querySelectorAll('button').forEach(node => node.setAttribute('aria-pressed', String(node === button)));
+          } catch {
+            // Keep the last successfully loaded photo and matching selected color.
+          } finally {
+            if (version === selectionVersion) frame.removeAttribute('aria-busy');
+          }
         });
         swatches.append(button);
       });
@@ -638,7 +664,9 @@ const demiandMotion = (() => {
     const from = source.getBoundingClientRect();
     const data = catalog[button.dataset.category];
     title.textContent = data.title; count.textContent = `${pad(data.models.length)} MODELS`;
-    anchor.replaceChildren(source.cloneNode());
+    const categoryIcon = source.cloneNode();
+    categoryIcon.classList.remove('product-image');
+    anchor.replaceChildren(categoryIcon);
     render(data);
     if (!reducedMotion.matches) {
       const outgoing = categories.cloneNode(true);
