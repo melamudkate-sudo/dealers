@@ -348,8 +348,8 @@
 }
 
 /* 13 — Every desktop row reserves its description line. */
-.terms-accordion { align-self:center; min-width:0; height:566px; overflow-y:auto; overscroll-behavior:contain; padding:10px 26px; border:1px solid var(--line); border-radius:var(--radius-card); background:#ffffffa6; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:inset 0 1px 0 white,var(--surface-shadow); }
-.terms-accordion details { height:68px; overflow-anchor:none; }
+.terms-accordion { align-self:center; min-width:0; height:526px; overflow-y:auto; overscroll-behavior:contain; padding:10px 26px; border:1px solid var(--line); border-radius:var(--radius-card); background:#ffffffa6; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:inset 0 1px 0 white,var(--surface-shadow); }
+.terms-accordion details { height:62px; overflow-anchor:none; }
 .terms-accordion details+details { border-top:1px solid var(--line); }
 .terms-accordion summary { display:flex; align-items:center; justify-content:space-between; gap:24px; list-style:none; padding:10px 0 6px; font-size:19px; font-weight:600; line-height:1.3; cursor:pointer; }
 .terms-accordion summary::-webkit-details-marker { display:none; }
@@ -358,7 +358,7 @@
 .terms-accordion details[open] summary { color:var(--red); }
 .terms-accordion details[open] summary span { transform:rotate(45deg); color:var(--red); }
 .terms-accordion details p { font-size:16px; line-height:1.5; margin:0; white-space:nowrap; }
-.terms-accordion details[open] { height:auto; min-height:68px; }
+.terms-accordion details[open] { height:auto; min-height:62px; }
 .terms-accordion details[open] p { white-space:normal; padding-bottom:10px; }
 .partnership-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:4px 0 10px; }
 .partnership-grid>div { display:grid; grid-template-columns:24px 1fr; gap:4px 8px; min-width:0; padding-top:8px; border-top:1px solid #d5d9e0; }

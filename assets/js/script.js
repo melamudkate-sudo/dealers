@@ -355,6 +355,16 @@ const demiandMotion = (() => {
   });
   matchMedia('(max-width:600px)').addEventListener('change', () => { if(termsDialog.open)termsDialog.close(); });
   let selectedTerm = partnerTerms.find(detail => detail.open);
+  const termsPhone = matchMedia('(max-width:600px)');
+  function configureLongTerms() {
+    partnerTerms.filter(detail => detail.matches('.partnership-details,.demand-generation-details')).forEach(detail => {
+      const summary=detail.querySelector('summary');
+      if(termsPhone.matches) summary.removeAttribute('aria-haspopup');
+      else { summary.setAttribute('aria-haspopup','dialog'); detail.open=false; }
+    });
+    if(!termsPhone.matches && !partnerTerms.some(detail=>detail.open)) { selectedTerm=partnerTerms[0]; selectedTerm.open=true; }
+  }
+  termsPhone.addEventListener('change',configureLongTerms);configureLongTerms();
   partnerTerms.forEach(detail => detail.querySelector('summary').addEventListener('click', event => {
     event.preventDefault();
     const summary = detail.querySelector('summary');
@@ -525,8 +535,9 @@ const demiandMotion = (() => {
     { label: 'Silver', swatch: '#b7bbc3' },
     { label: 'Slate', swatch: '#8c929d' }
   ];
-  const models = (items, singular) => items.map(([sku, colorCount]) => ({
+  const models = (items, singular) => items.map(([sku, colorCount, image]) => ({
     name: `${singular} / ${sku}`,
+    image,
     colors: colors.slice(0, colorCount)
   }));
   const catalog = {
@@ -574,7 +585,7 @@ const demiandMotion = (() => {
       const card = document.createElement('article'); card.className = 'catalog-card';
       card.setAttribute('aria-label', model.name);
       const frame = document.createElement('div'); frame.className = 'catalog-image';
-      const image = new Image(); image.src = data.image; image.alt = data.photoAlt;
+      const image = new Image(); image.src = model.image || data.image; image.alt = model.name;
       image.width = 2500; image.height = 2000; image.draggable = false; image.decoding = 'async';
       frame.append(image);
       const name = document.createElement('h3'); name.textContent = model.name;

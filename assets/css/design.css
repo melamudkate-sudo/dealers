@@ -736,19 +736,17 @@ html { scroll-behavior:auto; }
 .manufacturing-metrics span { font-size:16px; }
 }
 .after-sales { background:#eceef0; }
-.after-sales::before { content:'SUPPORT'; position:absolute; bottom:28px; left:var(--x); font:700 clamp(90px,18vw,320px)/1.2 var(--display); letter-spacing:-.07em; opacity:.05; pointer-events:none; z-index:-1; }
-.support-backbone { position:relative; display:grid; grid-template-columns:1fr 1.55fr .8fr; gap:36px; margin:24px 0 0; padding-top:24px; }
-.support-backbone::before { content:''; position:absolute; inset:0 0 auto; height:1px; background:linear-gradient(90deg,var(--red),#aeb3ba 65%); transform-origin:left; }
+.support-backbone { position:relative; display:grid; grid-template-columns:1fr 1.55fr .9fr; gap:28px; margin:24px 0 0; padding:24px; border:1px solid #d4dae2; border-radius:var(--radius-card); background:linear-gradient(120deg,#fff,#f7f8fb); box-shadow:0 10px 32px #19223306,inset 0 1px 0 #fff; }
 .warranty-statement h3 { font-size:20px; letter-spacing:.02em; }
 .warranty-statement strong { display:block; margin-top:24px; font:600 clamp(48px,5.2vw,84px)/1 var(--display); letter-spacing:-.065em; white-space:nowrap; color:var(--red); }
 .warranty-statement>span { display:block; max-width:220px; margin-top:12px; font-size:11px; line-height:1.6; letter-spacing:.08em; color:var(--copy); }
-.warranty-copy p { font-size:15px; line-height:1.6; }
+.warranty-copy p { color:#4c5460; font-size:16px; line-height:1.6; }
 .warranty-copy p+p { margin-top:14px; }
 .support-capabilities { display:grid; gap:20px; align-content:start; }
-.support-capabilities article { position:relative; padding-left:24px; }
-.support-capabilities article::before { content:''; position:absolute; left:0; top:8px; width:7px; height:7px; border-radius:50%; background:var(--red); }
-.support-capabilities h3 { font-size:18px; }
-.support-capabilities p { margin-top:6px; font-size:15px; }
+.support-capabilities article { display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:10px; align-content:start; position:relative; padding:0; }
+.support-capabilities article>svg { grid-row:1/3; width:30px; height:30px; padding:5px; border:1px solid #eadde0; border-radius:8px; background:#fff4f5; fill:none; stroke:var(--red); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.support-capabilities h3 { font-size:15px; line-height:1.3; overflow-wrap:anywhere; }
+.support-capabilities p { margin-top:6px; font-size:14px; color:#4c5460; }
 .ownership-journey { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:24px 0 10px; padding:0; list-style:none; }
 .ownership-journey li { position:relative; padding:14px 34px 14px 16px; border:1px solid #d0d5dd; border-radius:var(--radius-media); background:#ffffff80; }
 .ownership-journey li>svg { position:absolute; top:13px; right:16px; width:25px; height:25px; fill:none; stroke:#7d8592; stroke-width:1.25; stroke-linecap:round; stroke-linejoin:round; }
@@ -865,12 +863,12 @@ html { scroll-behavior:auto; }
  .contact.viewport-section { display:grid; grid-template-columns:1fr 1.15fr; grid-template-rows:auto 1fr auto; gap:28px 6vw; min-height:0; padding-block:36px; }
  .contact-top,.contact-bottom { grid-column:1/-1; }
  .contact-intro { display:flex; flex-direction:column; justify-content:center; align-self:stretch; gap:22px; margin:0; }
- .contact-intro>p:not(.contact-kicker) { align-self:start; max-width:430px; }
+ .contact-intro>p:not(.contact-kicker) { align-self:start; max-width:430px; text-align:left; }
  .contact h2.bookend-title { font-size:clamp(60px,6vw,96px); }
  .contact-main { display:contents; }
  .contact .partner-form { display:grid; grid-template-columns:1fr; align-content:start; gap:20px; padding:28px; }
  .contact .contact-details { border:0; padding:0; }
- .contact-details>span,.contact-details ul { display:none; }
+ .contact .contact-details>span,.contact .contact-details ul { display:none; }
  .contact .contact-details>a { margin:0; }
  .partner-form .form-head,.partner-form .form-submit,.partner-form .form-status { grid-column:1/-1; }
  .partner-form .form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:0; }
@@ -1055,15 +1053,15 @@ body.film-open { overflow:hidden; }
  .warranty-statement strong { font:700 42px/1 var(--sans); margin:0; }
  .warranty-statement>span { font-size:9px; line-height:1.4; margin:0; }
  .support-capabilities { grid-column:auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
- .support-capabilities article { padding:12px 0; border-top:1px solid #c3cbd6; }
+ .support-capabilities article { display:flex; flex-direction:column; gap:8px; padding:12px 0; border-top:1px solid #c3cbd6; }
  .support-capabilities article::before { display:none; }
  .support-capabilities h3 { font-size:10px; overflow-wrap:anywhere; }
- .support-capabilities p { font-size:12px; }
+ .support-capabilities p { margin:0; font-size:12px; }
  .mobile-disclosure { border-top:1px solid #bcc4d0; padding:12px 0 0; }
  .mobile-disclosure summary { font-size:14px; font-weight:600; line-height:1.5; cursor:pointer; }
  .mobile-disclosure[open] summary { margin-bottom:14px; }
  .mobile-disclosure p { font-size:14px; line-height:1.55; }
- .contact.viewport-section { height:calc(100svh - var(--navbar-height)); min-height:540px; padding:20px; justify-content:flex-start; gap:14px; }
+ .contact.viewport-section { height:calc(100svh - var(--navbar-height)); min-height:0; padding:20px; justify-content:flex-start; gap:14px; }
  .contact-top { padding:0 0 10px; }
  .contact-top .section-label { font-size:9px; }
  .contact-intro { display:flex; flex-direction:column; gap:8px; margin:0; }
@@ -1100,4 +1098,13 @@ body.film-open { overflow:hidden; }
  .contact .partner-form { padding:12px; gap:8px; }
  .contact-intro>p:not(.contact-kicker) { font-size:12px; }
  .contact-intro { gap:6px; }
+}
+@media(max-width:600px) and (max-height:640px) {
+ .contact.viewport-section { padding:12px 16px; gap:8px; }
+ .contact-top { padding-bottom:6px; }
+ .contact-kicker { display:none; }
+ .contact h2.bookend-title { font-size:28px; }
+ .contact-intro { gap:4px; }
+ .contact-main { gap:8px; }
+ .contact .form-grid { gap:8px; }
 }
