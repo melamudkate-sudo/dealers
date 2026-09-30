@@ -1,6 +1,7 @@
 # Видео DEMIAND
 
-Положите сюда свои MP4 (H.264, звук AAC):
+Горизонтальный `production.mp4` уже установлен; обложка взята из первого кадра.
+Осталось добавить четыре вертикальных MP4 (H.264, звук AAC):
 
 - `marketing-01.mp4` — вертикальное 9:16, 17.4M просмотров / 17.2K лайков.
 - `marketing-02.mp4` — вертикальное 9:16, 17M просмотров / 243K лайков.
@@ -8,7 +9,7 @@
 - `marketing-04.mp4` — вертикальное 9:16, 16.7M просмотров / 197K лайков.
 - `production.mp4` — горизонтальный фильм 16:9.
 
-В `index.html` заполните пять пустых `data-video-src=""`:
+В `index.html` заполните четыре пустых `data-video-src=""`:
 для четырёх `article[data-marketing-slide]` укажите соответственно
 `assets/videos/marketing-01.mp4` … `assets/videos/marketing-04.mp4`;
 для кнопки `production-video` — `assets/videos/production.mp4`.

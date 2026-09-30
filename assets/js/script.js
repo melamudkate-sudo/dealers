@@ -874,6 +874,7 @@ const demiandMotion = (() => {
     dialog.querySelector('.film-placeholder').hidden = !!source;
     document.body.classList.add('film-open');
     dialog.showModal();
+    if (source) video.play().catch(() => {});
   });
   dialog.querySelector('.film-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => {
