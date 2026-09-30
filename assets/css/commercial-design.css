@@ -521,33 +521,29 @@ body.terms-dialog-open { overflow:hidden; }
 @media(prefers-reduced-motion:reduce) { .marketing-controls button { transition:none; } }
 
 /* Cooking validation: one connected sequence, with native vertical flow on small screens. */
-.cooking-performance.viewport-section { display:grid; gap:clamp(24px,4dvh,42px); padding:32px var(--x); background:var(--paper); }
+.cooking-performance.viewport-section { display:grid; gap:clamp(24px,4dvh,42px); padding:28px var(--x); background:var(--paper); }
 .manufacturing-proof-head { display:grid; grid-template-columns:1.25fr 1fr; gap:40px; align-items:end; }
 .manufacturing-proof-head p { font-size:18px; line-height:1.5; }
-.validation-pipeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; margin:0; padding:0; }
-.validation-pipeline li { position:relative; min-width:0; padding:0 24px 0 0; }
-.validation-pipeline li::before { content:''; position:absolute; top:23px; left:0; right:0; height:1px; background:#c5cbd3; }
-.validation-pipeline li:last-child::before { right:calc(100% - 46px); }
-.validation-number { position:relative; display:grid; place-items:center; width:46px; height:46px; margin-bottom:24px; border:1px solid #c5cbd3; border-radius:50%; background:var(--paper); color:var(--red); font:500 14px/1 var(--display); }
-.validation-pipeline h3 { min-height:2.6em; max-width:240px; font:600 clamp(16px,1.4vw,22px)/1.3 var(--display); letter-spacing:-.02em; }
-.validation-pipeline p { margin-top:16px; max-width:290px; font-size:15px; line-height:1.6; }
+.validation-pipeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; list-style:none; margin:0; padding:0; }
+.validation-pipeline li { position:relative; display:grid; grid-template-rows:34px 2.6em 1fr; gap:14px; min-width:0; padding:18px; border:1px solid #d7dde5; border-radius:var(--radius-card); background:linear-gradient(135deg,#fff,#f8f9fb); }
+.validation-number { display:grid; place-items:center; width:34px; height:34px; border:1px solid #e3cdd1; border-radius:50%; background:#fff5f6; color:var(--red); font:500 13px/1 var(--display); }
+.validation-pipeline li>svg { position:absolute; top:22px; right:18px; width:25px; height:25px; fill:none; stroke:#6c7787; stroke-width:1.35; stroke-linecap:round; stroke-linejoin:round; }
+.validation-pipeline h3 { align-self:start; font:600 clamp(16px,1.3vw,20px)/1.3 var(--display); letter-spacing:-.02em; }
+.validation-pipeline p { margin:0; padding-top:12px; border-top:1px solid #e0e4ea; font-size:15px; line-height:1.55; color:#4c5460; }
+.validation-pipeline p strong { color:var(--ink); font-weight:600; }
 .cooking-proof { display:flex; gap:24px; align-items:center; border-top:1px solid #c5cbd3; padding-top:24px; }
 .cooking-proof strong { color:var(--red); font:600 clamp(48px,5.8vw,88px)/1 var(--display); letter-spacing:-.06em; }
 .cooking-proof>span { max-width:240px; font-size:13px; font-weight:600; line-height:1.5; letter-spacing:.09em; }
 @media(max-width:900px) {
  .manufacturing-proof-head { grid-template-columns:1fr; gap:16px; }
  .validation-pipeline { grid-template-columns:1fr; }
- .validation-pipeline li { padding:0 0 30px 70px; }
- .validation-pipeline li::before { left:23px; top:0; bottom:0; width:1px; height:auto; right:auto; }
- .validation-pipeline li:last-child::before { display:none; }
- .validation-number { position:absolute; left:0; top:0; margin:0; }
- .validation-pipeline h3 { min-height:0; max-width:none; padding-top:10px; }
- .validation-pipeline p { max-width:560px; margin-top:12px; }
- .validation-pipeline li:last-child { padding-bottom:0; }
+ .validation-pipeline li { grid-template-columns:34px 1fr; grid-template-rows:auto auto; gap:12px; padding:18px; }
+ .validation-pipeline h3 { align-self:center; padding-right:32px; }
+ .validation-pipeline p { grid-column:1/-1; }
 }
 @media(max-width:600px) {
  .cooking-performance.viewport-section { padding:28px var(--x); }
- .validation-pipeline li { padding-left:62px; }
+ .validation-pipeline li { padding:16px; }
  .cooking-proof { gap:18px; }
  .cooking-proof>span { font-size:11px; }
 }
