@@ -90,6 +90,21 @@ const demiandMotion = (() => {
   if (appStory) {
     const storyShell = appStory.querySelector('.app-story-shell');
     const storySlides = [...appStory.querySelectorAll('[data-app-slide]')];
+    const storyStage = appStory.querySelector('.app-story-stage');
+    let storyWidth = innerWidth, intrinsicFrame;
+    function refreshPhoneTracks() {
+      if (!phoneViewport.matches) return;
+      cancelAnimationFrame(intrinsicFrame);
+      intrinsicFrame = requestAnimationFrame(() => {
+        // WebKit may cache an old intrinsic grid height after width/details changes.
+        // Invalidate it synchronously before paint; do not retain a fixed slide height.
+        storyStage.style.display = 'none';
+        void storyStage.offsetHeight;
+        storyStage.style.removeProperty('display');
+      });
+    }
+    addEventListener('resize', () => { if(innerWidth !== storyWidth) { storyWidth=innerWidth; refreshPhoneTracks(); } }, {passive:true});
+    storyStage.addEventListener('toggle', event => { if(event.target.matches('details'))refreshPhoneTracks(); }, true);
     // Decode the final compositions before their first reveal; hidden PNGs otherwise paint late.
     const appMediaObserver = new IntersectionObserver((entries, observer) => {
       if (!entries.some(entry => entry.isIntersecting)) return;
@@ -262,7 +277,7 @@ const demiandMotion = (() => {
 
     let dragStart = null;
     storyShell.addEventListener('pointerdown', event => {
-      if (event.button !== 0 || event.target.closest('button,a')) return;
+      if (event.button !== 0 || event.target.closest('button,a,summary,details,input,select,textarea,video')) return;
       dragStart = { x:event.clientX, y:event.clientY, id:event.pointerId };
       storyDragging = true;
       storyShell.setPointerCapture(event.pointerId);
