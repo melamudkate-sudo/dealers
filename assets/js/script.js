@@ -431,7 +431,7 @@ const demiandMotion = (() => {
 
   // One entrance observer: chapter labels, copy, and grouped systems share CSS tokens.
   // Group existing small reveals to avoid nested animations and excessive staggering.
-  document.querySelectorAll('.chapter-heading,.products,.benefit-grid,.manufacturing-metrics,.network-proof,.contact-top,.contact-intro,.contact-main').forEach(group => {
+  document.querySelectorAll('.chapter-heading,.products,.benefit-grid,.manufacturing-metrics,.network-proof,.contact-top,.contact-intro,.partner-form,.contact-bottom').forEach(group => {
     group.querySelectorAll('.reveal').forEach(node => node.classList.remove('reveal'));
     group.classList.add('reveal');
   });
