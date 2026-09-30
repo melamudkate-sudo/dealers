@@ -17,10 +17,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/design.css?v=20260930-media-final" />
-  <link rel="stylesheet" href="assets/css/feature-design.css?v=20260930-media-final" />
+  <link rel="stylesheet" href="assets/css/feature-design.css?v=20260930-orbit-intro" />
   <link rel="stylesheet" href="assets/css/commercial-design.css?v=20260930-media-final" />
   <link rel="stylesheet" href="assets/css/navigation.css?v=20260930-handoff" />
   <script type="module" src="assets/js/model-viewer-init.js"></script>
+  <script defer src="assets/js/hero-intro.js?v=20260930-orbit-intro"></script>
+  <noscript><style>.model-stage[data-intro] .hero-model{opacity:1}.model-intro{display:none}</style></noscript>
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
@@ -52,7 +54,25 @@
       </div>
       <div class="hero-object reveal" aria-label="Interactive DEMIAND DK-5100 product model">
         <div class="object-note note-top">01 / INTERACTIVE 3D</div>
-        <div class="model-stage">
+        <div class="model-stage" data-intro="loading" aria-busy="true">
+          <div class="model-intro" role="status" aria-label="Loading interactive 3D model">
+            <div class="model-intro-art" aria-hidden="true">
+              <svg viewBox="0 0 320 320" fill="none">
+                <defs>
+                  <radialGradient id="intro-halo"><stop stop-color="#cdb995" stop-opacity=".12"/><stop offset="1" stop-color="#cdb995" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="intro-metal" x1="50" y1="50" x2="270" y2="270" gradientUnits="userSpaceOnUse"><stop stop-color="#e1d5bc"/><stop offset=".48" stop-color="#9e8661"/><stop offset="1" stop-color="#d1c4ad" stop-opacity=".15"/></linearGradient>
+                </defs>
+                <circle cx="160" cy="160" r="155" fill="url(#intro-halo)"/>
+                <circle cx="160" cy="160" r="132" stroke="#a9aeb8" stroke-opacity=".22" stroke-width=".75"/>
+                <circle cx="160" cy="160" r="102" stroke="#a9aeb8" stroke-opacity=".18" stroke-width=".75"/>
+                <path d="M160 20v9m140 131h-9M160 300v-9M20 160h9" stroke="#a0a5b0" stroke-opacity=".6" stroke-width=".75"/>
+                <g class="intro-orbit intro-orbit-outer"><path d="M28 160a132 132 0 0 1 132-132" stroke="url(#intro-metal)" stroke-width="1.5" stroke-linecap="round"/><circle cx="160" cy="28" r="2.5" fill="#ef0026"/></g>
+                <g class="intro-orbit intro-orbit-inner"><path d="M262 160a102 102 0 0 1-102 102" stroke="#a0a5b0" stroke-opacity=".65" stroke-width="1" stroke-linecap="round"/></g>
+              </svg>
+              <div class="intro-model-mark"><span>SMARTCOOK</span><b>DK–5100</b><i></i></div>
+            </div>
+            <span class="model-intro-label" aria-hidden="true">Preparing your experience</span>
+          </div>
 <model-viewer class="hero-model" src="assets/models/demiand-dk5100-fast.glb" loading="eager" reveal="auto" poster="assets/images/hero-model-poster.webp" alt="DEMIAND DK-5100 air fryer, interactive 3D model" camera-controls disable-pan disable-zoom auto-rotate auto-rotate-delay="1800" rotation-per-second="8deg" interaction-prompt="none" shadow-intensity=".16" shadow-softness="1" exposure="1.05" environment-image="neutral" camera-orbit="28deg 80deg 95%" min-camera-orbit="auto 55deg 95%" max-camera-orbit="auto 88deg 95%" field-of-view="30deg"><img class="hero-model-poster" slot="poster" src="assets/images/hero-model-poster.webp" fetchpriority="high" alt="DEMIAND DK-5100 black air fryer" /><div class="model-loader" slot="progress-bar"><i></i></div></model-viewer>
         </div>
         <div class="hero-object-caption"><div class="object-note note-bottom">DK-5100<br />SMARTCOOK SERIES</div><div class="model-hint"><i>↔</i>Drag to rotate</div></div>
